@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css"> <!-- Incluindo o arquivo CSS -->
+</head>
+<body class="get-page">
+    <h1 class="get-title">Dados Cadastrais - GET</h1>
+    
+    <!-- Formulário para buscar dados -->
+    <form class="get-form">
+        <label class="get-label" for="cpfAtualizar">CPF:</label>
+        <input type="text" id="cpfAtualizar" class="get-input" placeholder="Digite o CPF">
+        <input type="button" class="get-button" value="Buscar" onclick="buscarDados()">
+    </form>
+
+    <!-- Tabela para exibir os dados -->
+    <table class="get-table">
+        <thead>
+            <tr class="get-tr">
+                <th class="get-th">ID</th>
+                <th class="get-th">Nome</th>
+                <th class="get-th">Idade</th>
+                <th class="get-th">CPF</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-corpo" class="get-tbody"></tbody>
+    </table>
+
+    <script>
+        // Função para buscar os dados do servidor
+        function buscarDados() {
+            const cpf = document.getElementById('cpfAtualizar').value;
+
+            if (!cpf) {
+                alert('Por favor, insira um CPF para buscar.');
+                return;
+            }
+
+            // Realizando a requisição GET para pegar todos os dados
+            fetch(`http://localhost:3000/pessoas`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar os dados.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Filtrando os dados para encontrar a pessoa com o CPF informado
+                const pessoaEncontrada = data.find(pessoa => pessoa.cpf === cpf);
+
+                if (pessoaEncontrada) {
+                    // Preenche a tabela com os dados encontrados
+                    const tabelaCorpo = document.getElementById('tabela-corpo');
+                    tabelaCorpo.innerHTML = '';  // Limpa a tabela antes de adicionar novos dados
+                    
+                    const novaLinha = document.createElement('tr');
+                    novaLinha.innerHTML = `
+                        <td class="get-td">${pessoaEncontrada.id}</td>
+                        <td class="get-td">${pessoaEncontrada.nome}</td>
+                        <td class="get-td">${pessoaEncontrada.idade}</td>
+                        <td class="get-td">${pessoaEncontrada.cpf}</td>
+                    `;
+                    tabelaCorpo.appendChild(novaLinha);  // Adiciona a nova linha na tabela
+                } else {
+                    alert('Pessoa não encontrada!');
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao buscar os dados. Tente novamente mais tarde.');
+            });
+        }
+    </script>
+</body>
+</html>

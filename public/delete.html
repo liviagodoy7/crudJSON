@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="delete-page">
+    <h1 class="delete-title">Dados Cadastrais - DELETE</h1>
+    
+    <!-- Formulário para excluir dados -->
+    <form class="delete-form">
+        <h3 class="delete-heading">Excluir Registro</h3>
+        <label class="delete-label" for="cpf">CPF:</label>
+        <input type="text" id="cpf" class="delete-input" placeholder="Digite o CPF para deletar">
+        <input type="button" class="delete-button" onclick="deletarDados()" value="Deletar">
+    </form>
+
+    <!-- Tabela para exibir os dados -->
+    <table class="delete-table">
+        <thead>
+            <tr class="delete-tr">
+                <th class="delete-th">ID</th>
+                <th class="delete-th">Nome</th>
+                <th class="delete-th">Idade</th>
+                <th class="delete-th">CPF</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-corpo" class="delete-tbody"></tbody>
+    </table>
+
+    <script>
+        // Função para deletar os dados com base no CPF
+        function deletarDados() {
+            const cpf = document.getElementById("cpf").value;
+
+            if (!cpf) {
+                alert('Por favor, insira um CPF para excluir.');
+                return;
+            }
+
+            // Primeiro, buscamos todos os dados da API
+            fetch(`http://localhost:3000/pessoas`)
+                .then(response => response.json())
+                .then(data => {
+                    // Procurando o objeto com o CPF fornecido
+                    const pessoaParaDeletar = data.find(pessoa => pessoa.cpf === cpf);
+
+                    if (pessoaParaDeletar) {
+                        // Deletando o dado no servidor
+                        fetch(`http://localhost:3000/pessoas/${pessoaParaDeletar.id}`, {
+                            method: 'DELETE'
+                        })
+                        .then(() => {
+                            alert(`Pessoa com CPF ${cpf} foi excluída com sucesso.`);
+                            // Atualiza a tabela após a exclusão
+                            atualizarTabela();
+                            document.getElementById("cpf").value = ''; // Limpa o campo de CPF
+                        })
+                        .catch(error => {
+                            console.error('Erro ao excluir dados:', error);
+                            alert('Erro ao excluir os dados. Tente novamente.');
+                        });
+                    } else {
+                        alert('Pessoa não encontrada com o CPF fornecido.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados:', error);
+                    alert('Erro ao buscar os dados para exclusão. Tente novamente.');
+                });
+        }
+
+        // Função para atualizar a tabela
+        function atualizarTabela() {
+            fetch(`http://localhost:3000/pessoas`)
+                .then(response => response.json())
+                .then(data => {
+                    const tabela = document.getElementById('tabela-corpo');
+                    tabela.innerHTML = ''; // Limpa a tabela antes de preencher
+
+                    data.forEach((objeto) => {
+                        const linha = `<tr class="delete-tr">
+                            <td class="delete-td">${objeto.id}</td>
+                            <td class="delete-td">${objeto.nome}</td>
+                            <td class="delete-td">${objeto.idade}</td>
+                            <td class="delete-td">${objeto.cpf}</td>
+                        </tr>`;
+                        tabela.innerHTML += linha; // Adiciona as linhas na tabela
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao atualizar a tabela:', error);
+                    alert('Erro ao carregar os dados da tabela.');
+                });
+        }
+
+        // Atualizar a tabela ao carregar a página
+        window.onload = atualizarTabela;
+    </script>
+</body>
+</html>

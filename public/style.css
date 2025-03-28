@@ -1,0 +1,339 @@
+/* Resetando margens e paddings para garantir que o layout seja consistente */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo geral da página */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    margin: 0;
+}
+
+/* Título principal da página */
+h1 {
+    font-size: 2.5rem;
+    color: #d32f2f;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Formulário com fundo branco e sombra */
+form {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Cabeçalho do formulário */
+h3 {
+    font-size: 1.4rem;
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+
+/* Estilo dos rótulos */
+label {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Estilo dos campos de entrada */
+input[type="text"] {
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #d32f2f;
+    background-color: #fff;
+    outline: none;
+}
+
+/* Botão de envio */
+input[type="button"] {
+    padding: 12px;
+    background-color: #d32f2f;
+    color: #fff;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+input[type="button"]:hover {
+    background-color: #b71c1c;
+}
+
+input[type="button"]:active {
+    transform: translateY(2px);
+}
+
+/* Estilo para mensagens de sucesso ou erro */
+#mensagem {
+    margin-top: 10px;
+    padding: 12px;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 6px;
+}
+
+#mensagem.success {
+    background-color: #388e3c;
+    color: #fff;
+}
+
+#mensagem.error {
+    background-color:  #a71313;
+    color: #fff;
+}
+
+/* Estilo geral da página para a página DELETE */
+body.delete-page {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Título principal da página DELETE */
+h1.delete-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Formulário de exclusão */
+form.delete-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+/* Cabeçalho do formulário DELETE */
+h3.delete-heading {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Campo de CPF */
+label.delete-label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Input de texto */
+input[type="text"].delete-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Botão de ação DELETE */
+input[type="button"].delete-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2rem;
+    background-color:  #a71313;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Alterando a cor do botão ao passar o mouse */
+input[type="button"].delete-button:hover {
+    background-color:  #a71313;
+}
+
+/* Tabela de dados */
+table.delete-table {
+    width: 80%;
+    max-width: 800px;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+/* Cabeçalhos da tabela */
+th.delete-th {
+    font-size: 1.1rem;
+    padding: 10px;
+    background-color: #a71313;
+    color: white;
+    text-align: left;
+}
+
+/* Linhas da tabela */
+td.delete-td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Corpo da tabela */
+tbody.delete-tbody {
+    background-color: #f9f9f9;
+}
+
+/* Linha da tabela em hover */
+tr.delete-tr:hover {
+    background-color: #ecf0f1;
+}
+
+/* Estilo geral da página GET */
+body.get-page {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f9fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Título principal da página GET */
+h1.get-title {
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Formulário de busca */
+form.get-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 400px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Labels do formulário */
+label.get-label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Input de CPF */
+input[type="text"].get-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+/* Botão de Buscar */
+input[type="button"].get-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    background-color:  #a71313; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+input[type="button"].get-button:hover {
+    background-color:  #a71313;
+}
+
+/* Tabela de dados */
+table.get-table {
+    width: 80%;
+    max-width: 800px;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Cabeçalho da tabela */
+th.get-th {
+    font-size: 1.1rem;
+    padding: 12px;
+    background-color:  #a71313;
+    color: white;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+/* Linhas da tabela */
+td.get-td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+/* Corpo da tabela */
+tbody.get-tbody {
+    background-color: #f9f9f9;
+}
+
+/* Linha da tabela em hover */
+tr.get-tr:hover {
+    background-color: #ecf0f1;
+}
+
+/* Alternando cores das linhas da tabela */
+tr:nth-child(even).get-tr {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(odd).get-tr {
+    background-color: #ffffff;
+}
+

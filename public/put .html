@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualização de Dados</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <form id="form">
+            <h3>Atualizar Dados</h3>
+            <label for="id">ID:</label>
+            <input type="text" id="id" readonly><br>
+
+            <label for="nomeAtualizar">Nome:</label>
+            <input type="text" id="nomeAtualizar"><br>
+
+            <label for="idadeAtualizar">Idade:</label>
+            <input type="text" id="idadeAtualizar"><br>
+
+            <label for="cpfAtualizar">CPF:</label>
+            <input type="text" id="cpfAtualizar" placeholder="Digite o CPF para busca"><br>
+
+            <input type="button" onclick="buscarDados()" value="Buscar">
+            <input type="button" onclick="atualizarDados()" value="Atualizar">
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Função para buscar dados
+        function buscarDados() {
+            const cpf = document.getElementById('cpfAtualizar').value;
+            fetch(`http://localhost:3000/pessoas`, {  // Mudado para o endpoint correto
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const pessoa = data.find(p => p.cpf === cpf);  // Encontrando a pessoa pelo CPF
+                if (pessoa) {
+                    document.getElementById('id').value = pessoa.id;
+                    document.getElementById('nomeAtualizar').value = pessoa.nome;
+                    document.getElementById('idadeAtualizar').value = pessoa.idade;
+                    document.getElementById('cpfAtualizar').value = pessoa.cpf;
+                } else {
+                    alert("Dados não encontrados!");
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao buscar dados:", error);
+                alert("Erro ao buscar dados.");
+            });
+        }
+
+        // Função para atualizar dados
+        function atualizarDados() {
+            const id = document.getElementById('id').value;
+            const nome = document.getElementById('nomeAtualizar').value;
+            const idade = document.getElementById('idadeAtualizar').value;
+            const cpf = document.getElementById('cpfAtualizar').value;
+
+            if (!id || !nome || !idade || !cpf) {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+
+            fetch(`http://localhost:3000/pessoas/${id}`, {  // Ajustado para utilizar o ID diretamente
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: id,
+                    nome: nome,
+                    idade: idade,
+                    cpf: cpf
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error("Falha na atualização.");
+            })
+            .then(data => {
+                alert("Dados atualizados com sucesso!");
+                // Limpa os inputs do formulário
+                document.getElementById('id').value = '';
+                document.getElementById('nomeAtualizar').value = '';
+                document.getElementById('idadeAtualizar').value = '';
+                document.getElementById('cpfAtualizar').value = '';
+            })
+            .catch(error => {
+                console.error("Erro ao atualizar os dados:", error);
+                alert("Erro ao atualizar os dados.");
+            });
+        }
+    </script>
+</body>
+</html>
